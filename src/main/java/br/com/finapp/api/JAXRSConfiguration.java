@@ -1,4 +1,4 @@
-package br.com.finappapi.finapp.api;
+package br.com.finapp.api;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

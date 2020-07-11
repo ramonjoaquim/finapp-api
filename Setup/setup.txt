@@ -1,0 +1,12 @@
+
+minha aplicação está em localhost:8070/finapp-api
+
+Deixar o sevidor up 
+1- services
+2- wildfly -> start
+
+deploy 
+
+1- cleand and build 
+2- run app
+

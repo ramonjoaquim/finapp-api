@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.finappapi.finapp.api.resources;
+package br.com.finapp.api.resources;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
@@ -11,10 +11,10 @@ import javax.ws.rs.Path;
  *
  * @author sistema
  */
-@Path("hello")
-public class HelloWorldResouce {
+@Path("heathcheck")
+public class HeathCheck {
     @GET
-    public String hellowWorld(){
-        return "ta funfando";
+    public String HeathCheck(){
+        return "Application is up!";
     }
 }
