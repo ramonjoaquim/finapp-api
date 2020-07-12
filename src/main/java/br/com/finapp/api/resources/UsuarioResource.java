@@ -6,9 +6,10 @@
 package br.com.finapp.api.resources;
 
 import br.com.finapp.models.Usuario;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceUnit;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,36 +30,25 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class UsuarioResource {
     
-    static List<Usuario> usuarios = new ArrayList<>();
-    
-    private Usuario findUsuario(UUID id){
-        Usuario usuario = null;
-        
-        for (Usuario u : usuarios){
-            if(u.getId().equals(id)){
-                usuario = u;
-            }
-        }
-        
-        return usuario;
-    }
-        
+    @PersistenceUnit(unitName = "FinAppPU")
+    EntityManager entityManager;
+               
     @GET
     public List<Usuario> GetUsuarios(){
-    
-        return usuarios;
+        return entityManager
+                .createQuery("SELECT u FROM Usuario u", Usuario.class)
+                .getResultList();
     }
     
     @GET
     @Path("{id}")
     public Usuario getUsuario(@PathParam("id") UUID id){
-        return findUsuario(id);        
+        return entityManager.find(Usuario.class, id);
     }
     
     @POST
     public Response addUsuario( Usuario usuario){
-        usuario.setId(UUID.randomUUID());
-        usuarios.add(usuario);
+        entityManager.persist(usuario);
         
         return Response
                 .status(Response.Status.CREATED)
@@ -69,17 +59,16 @@ public class UsuarioResource {
     @PUT
     @Path("{id}")
     public Usuario updateUsuario(@PathParam("id") UUID id, Usuario user){
-        Usuario usuario = findUsuario(id);
-        usuario.setNome(user.getNome());
+        user.setId(id);
+        entityManager.merge(id);
         
-        return usuario;
+        return user;
     }
     
     @DELETE
     @Path("{id}")
     public void removeUsuario(@PathParam("id") UUID id){
-        Usuario usuario = findUsuario(id);
-        usuarios.remove(usuario);
+       entityManager.remove(id);
     }    
     
 }
