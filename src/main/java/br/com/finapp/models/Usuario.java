@@ -12,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -21,6 +23,10 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name= "usuario", schema = "public")
+@NamedQueries({
+    @NamedQuery(name = "Usuario.FindAll", query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = "Usuario.FindByUserAndPassword", query = "SELECT u FROM Usuario u where u.usuario = :usuario and u.senha = :senha")
+})
 public class Usuario implements Serializable{
     
     @Id

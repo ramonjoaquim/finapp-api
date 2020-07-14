@@ -19,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -37,10 +38,19 @@ public class UsuarioResource {
     EntityManager entityManager;
                
     @GET
-    public List<Usuario> GetUsuarios(){
-        return entityManager
-                .createQuery("SELECT u FROM Usuario u", Usuario.class)
+    public List<Usuario> GetUsuarios(@QueryParam("usuario") String usuario, @QueryParam("senha") String senha ){
+        if (usuario == null || usuario.isBlank() || senha == null || senha.isBlank()){
+            return entityManager
+                .createNamedQuery("Usuario.FindAll", Usuario.class)
                 .getResultList();
+        }else{
+            return entityManager
+                .createNamedQuery("Usuario.FindByUserAndPassword", Usuario.class)
+                .setParameter("usuario", usuario)
+                .setParameter("senha", senha)
+                .getResultList();
+        }       
+        
     }
     
     @GET
