@@ -39,8 +39,7 @@ public class Lancamento implements Serializable{
     
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date dataLancamento;
-        
+    private Date dataLancamento;        
     
     @ManyToOne
     private Categoria categoria;

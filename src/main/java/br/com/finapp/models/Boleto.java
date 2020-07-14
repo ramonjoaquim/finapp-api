@@ -35,8 +35,7 @@ public class Boleto implements Serializable{
     private String descricao;
     
     @Column(nullable = false)
-    private Float valor;
-    
+    private Float valor;    
     
     @ManyToOne
     private Categoria categoria;
