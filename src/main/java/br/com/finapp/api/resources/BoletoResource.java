@@ -5,7 +5,7 @@
  */
 package br.com.finapp.api.resources;
 
-import br.com.finapp.models.Usuario;
+import br.com.finapp.models.Boleto;
 import java.util.List;
 import java.util.UUID;
 import javax.ejb.Stateless;
@@ -28,52 +28,50 @@ import javax.ws.rs.core.Response;
  */
 
 @Stateless
-@Path("usuario")
+@Path("boleto")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class UsuarioResource {
+public class BoletoResource {
     
     @PersistenceContext(unitName = "FinAppPU")
     EntityManager entityManager;
-               
+    
     @GET
-    public List<Usuario> GetUsuarios(){
+    public List<Boleto> GetBoletos(){
         return entityManager
-                .createQuery("SELECT u FROM Usuario u", Usuario.class)
+                .createQuery("SELECT b FROM Boleto b", Boleto.class)
                 .getResultList();
     }
     
     @GET
     @Path("{id}")
-    public Usuario getUsuario(@PathParam("id") UUID id){
-        return entityManager.find(Usuario.class, id);
+    public Boleto getBoleto(@PathParam("id") UUID id){
+        return entityManager.find(Boleto.class, id);
     }
     
     @POST
-    public Response addUsuario( Usuario usuario){
-        entityManager.persist(usuario);
+    public Response addBoleto( Boleto boleto){
+        entityManager.persist(boleto);
         
         return Response
                 .status(Response.Status.CREATED)
-                .entity(usuario)
+                .entity(boleto)
                 .build();
     }
     
     @PUT
     @Path("{id}")
-    public Usuario updateUsuario(@PathParam("id") UUID id, Usuario user){
-        user.setId(id);
+    public Boleto updateBoleto(@PathParam("id") UUID id, Boleto boleto){
+        boleto.setId(id);
         entityManager.merge(id);
         
-        return user;
+        return boleto;
     }
     
     @DELETE
     @Path("{id}")
-    public void removeUsuario(@PathParam("id") UUID id){
-       Usuario usuario = entityManager.find(Usuario.class, id);
-       entityManager.remove(usuario);
-    }    
-    
+    public void removeBoleto(@PathParam("id") UUID id){
+       Boleto boleto = entityManager.find(Boleto.class, id);
+       entityManager.remove(boleto);
+    }
 }
-

@@ -5,7 +5,7 @@
  */
 package br.com.finapp.api.resources;
 
-import br.com.finapp.models.Usuario;
+import br.com.finapp.models.Lancamento;
 import java.util.List;
 import java.util.UUID;
 import javax.ejb.Stateless;
@@ -28,52 +28,51 @@ import javax.ws.rs.core.Response;
  */
 
 @Stateless
-@Path("usuario")
+@Path("lancamento")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class UsuarioResource {
+public class LancamentoResource {
     
     @PersistenceContext(unitName = "FinAppPU")
     EntityManager entityManager;
-               
+    
     @GET
-    public List<Usuario> GetUsuarios(){
+    public List<Lancamento> GetLancamentos(){
         return entityManager
-                .createQuery("SELECT u FROM Usuario u", Usuario.class)
+                .createQuery("SELECT l FROM Lancamento l", Lancamento.class)
                 .getResultList();
     }
     
     @GET
     @Path("{id}")
-    public Usuario getUsuario(@PathParam("id") UUID id){
-        return entityManager.find(Usuario.class, id);
+    public Lancamento getLancamento(@PathParam("id") UUID id){
+        return entityManager.find(Lancamento.class, id);
     }
     
     @POST
-    public Response addUsuario( Usuario usuario){
-        entityManager.persist(usuario);
+    public Response addLancamento( Lancamento lancamento){
+        entityManager.persist(lancamento);
         
         return Response
                 .status(Response.Status.CREATED)
-                .entity(usuario)
+                .entity(lancamento)
                 .build();
     }
     
     @PUT
     @Path("{id}")
-    public Usuario updateUsuario(@PathParam("id") UUID id, Usuario user){
-        user.setId(id);
+    public Lancamento updateLancamento(@PathParam("id") UUID id, Lancamento lancamento){
+        lancamento.setId(id);
         entityManager.merge(id);
         
-        return user;
+        return lancamento;
     }
     
     @DELETE
     @Path("{id}")
-    public void removeUsuario(@PathParam("id") UUID id){
-       Usuario usuario = entityManager.find(Usuario.class, id);
-       entityManager.remove(usuario);
-    }    
+    public void removeLancamento(@PathParam("id") UUID id){
+       Lancamento lancamento = entityManager.find(Lancamento.class, id);
+       entityManager.remove(lancamento);
+    }  
     
 }
-

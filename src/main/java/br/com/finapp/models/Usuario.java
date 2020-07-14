@@ -11,9 +11,9 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -24,25 +24,26 @@ import javax.persistence.Table;
 public class Usuario implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private UUID id;
     
-    @Column(nullable = false, length = 255, updatable = true)
+    @Column(nullable = false, unique = true)
     private String nome;
     
-    @Column(nullable = false, length = 255, updatable = true, unique = true)
+    @Column(nullable = false)
     private String usuario;
     
-    @Column(nullable = false, length = 255, updatable = true, unique = true)
+    @Column(nullable = false)
     private String email;
     
-    @Column(nullable = false, length = 255, updatable = true, unique = true)
+    @Column(nullable = false)
     private String senha;
     
-    @Column(nullable = false, length = 255, updatable = true)
+    @Column(nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date nascimento;
     
-    @Column(nullable = false, updatable = true)
+    @Column(nullable = false)
     private char sexo;
     
     public Usuario(){
@@ -103,8 +104,6 @@ public class Usuario implements Serializable{
 
     public void setSexo(char sexo) {
         this.sexo = sexo;
-    }
-    
-    
+    }    
     
 }

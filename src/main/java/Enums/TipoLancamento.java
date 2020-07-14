@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.finapp.api.resources;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+package Enums;
 
 /**
  *
  * @author sistema
  */
-@Path("heathcheck")
-public class HeathCheck {
-    @GET
-    public String HeathCheck(){
-        return "Application is up!";
+public enum TipoLancamento {
+   
+    lancamento(1),
+    despesa(0);
+    
+    private int value;
+    
+    private TipoLancamento(int value){
+        this.value = value;
     }
+    
 }
