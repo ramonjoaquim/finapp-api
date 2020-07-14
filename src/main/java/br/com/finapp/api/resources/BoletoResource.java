@@ -61,11 +61,25 @@ public class BoletoResource {
     
     @PUT
     @Path("{id}")
-    public Boleto updateBoleto(@PathParam("id") UUID id, Boleto boleto){
+    public Response updateBoleto(@PathParam("id") UUID id, Boleto boleto){
         boleto.setId(id);
-        entityManager.merge(id);
+        boolean erro = false;
+        try {
+            entityManager.merge(id);
+        } catch (Exception e) {
+            erro = true;
+        }        
         
-        return boleto;
+        if(erro){
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .build();
+        }else{
+            return Response
+                .status(Response.Status.CREATED)
+                .entity(boleto)
+                .build();
+        }        
     }
     
     @DELETE
